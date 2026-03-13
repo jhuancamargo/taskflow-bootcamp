@@ -1,0 +1,22 @@
+# Front-end (Vue/Node)
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Back-end (Python)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+
+# Variáveis de Ambiente e SO
+.env
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/

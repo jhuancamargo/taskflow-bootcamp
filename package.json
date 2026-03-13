@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "vue-router": "^5.0.3"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "@tailwindcss/vite": "^4.2.1"
+  }
+}
