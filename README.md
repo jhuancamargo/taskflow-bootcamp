@@ -41,9 +41,9 @@ O escopo do projeto contempla:
 | ID | Responsável | Área | Descrição da Tarefa (O que vai fazer) |
 | :--- | :--- | :--- | :--- |
 | **01** | Jhuan | Base (MVP) | Estrutura inicial do Back-end, Front-end e Banco de Dados |
-| **02** | [ Nome ] | [ Ex: Front-end ] | [ Descreva sua tarefa aqui ] |
+| **02** | [ Gabriela ] | [ Ex: Front-end ] | [ Responsável pelo design e estilização da parte front-end do projeto. ] |
 | **03** | [ Nome ] | [ Ex: Back-end ] | [ Descreva sua tarefa aqui ] |
-| **04** | [ Nome ] | [ Ex: Documentação ]| [ Descreva sua tarefa aqui ] |
+| **04** | [ Gabriela ] | [ Ex: Documentação ]| [ Responsável pela elaboração da documentação e envio do trabalho na plataforma. ] |
 | **05** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
 | **06** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
 | **07** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
