@@ -43,8 +43,8 @@ O escopo do projeto contempla:
 | **01** | Jhuan | Base (MVP) | Estrutura inicial do Back-end, Front-end e Banco de Dados |
 | **02** | [ Gabriela ] | [ Ex: Front-end ] | [ Responsável pelo design e estilização da parte front-end do projeto. ] |
 | **03** | [ Nome ] | [ Ex: Back-end ] | [ Descreva sua tarefa aqui ] |
-| **04** | [ Gabriela ] | [ Ex: Documentação ]| [ Responsável pela elaboração da documentação e envio do trabalho na plataforma. ] |
-| **05** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
+| **04** | [ Gabriela | Gabriel David ] | [ Ex: Documentação ]| [ Responsável pela elaboração da documentação e envio do trabalho na plataforma. ] |
+| **05** | [ Carlos David ] | [ Validação ] | [ Teste em ambiente local ] |
 | **06** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
 | **07** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
 | **08** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
@@ -55,7 +55,107 @@ O escopo do projeto contempla:
 
 ## 5. Como rodar o projeto localmente
 
-### Banco de Dados (PostgreSQL)
+### Pré-requisitos
+
+Antes de iniciar, certifique-se de possuir:
+
+- Docker em execução
+- Python 3.11
+- Node.js (versão LTS recomendada)
+
+### 5.1 Banco de Dados (PostgreSQL)
+
 Na raiz do projeto, execute:
+
 ```bash
 docker-compose up -d
+```
+
+### 5.2 Back-end
+
+Acesse a pasta do back-end:
+
+```bash
+cd backend
+```
+
+Crie o ambiente virtual com Python 3.11:
+```bash
+py -3.11 -m venv .venv
+```
+
+Ative o ambiente virtual no Windows:
+```bash
+.venv\Scripts\activate
+```
+
+Instale as dependências:
+```bash
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+```
+
+Execute o servidor:
+```bash
+uvicorn app.main:app --reload
+```
+
+A API estará disponível em:
+```bash
+http://127.0.0.1:8000
+```
+
+### 5.3 Validação do Back-end (Swagger)
+
+Acesse:
+
+```bash
+http://127.0.0.1:8000/docs
+```
+
+#### Criar usuário
+
+No endpoint `POST /usuarios`, clique em **Try it out** e utilize um corpo como este:
+
+```json
+{
+  "nome": "Gabriel",
+  "email": "gabriel@example.com",
+  "funcao": "desenvolvedor"
+}
+```
+
+Depois, clique em **Execute**.
+
+---
+
+#### Listar usuários
+
+No endpoint `GET /usuarios`, verifique se o usuário foi cadastrado corretamente.
+
+---
+
+
+### 5.4 Front-end
+
+A partir da raiz do projeto:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+A aplicação estará disponível em:
+
+```bash
+http://localhost:5173
+```
+
+---
+
+## 6. Observações
+
+- O projeto segue uma arquitetura com separação entre front-end e back-end.
+- O banco de dados é executado em container Docker para facilitar a portabilidade.
+- A API foi desenvolvida com FastAPI e possui documentação automática via Swagger.

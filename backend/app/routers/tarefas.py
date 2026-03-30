@@ -16,7 +16,7 @@ def criar_tarefa(tarefa: TarefaCreate, db: Session = Depends(get_db)):
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuário não encontrado.")
     
-    nova_tarefa = Tarefa(**tarefa.model_dump())
+    nova_tarefa = Tarefa(**tarefa.dict())
     db.add(nova_tarefa)
     db.commit()
     db.refresh(nova_tarefa)
