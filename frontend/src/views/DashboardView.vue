@@ -20,6 +20,9 @@
             <span class="text-xs font-semibold px-2 py-1 rounded-md bg-slate-100 text-slate-600 mb-2 inline-block">{{ tarefa.prioridade }}</span>
             <h3 class="font-bold text-slate-800">{{ tarefa.titulo }}</h3>
             <p class="text-sm text-slate-500 mt-1">{{ tarefa.descricao }}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span v-for="user in tarefa.responsaveis" :key="user.id" class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">{{ user.nome }}</span>
+            </div>
             <div class="mt-4 flex justify-end">
               <button @click="atualizarStatus(tarefa.id, 'Em Andamento')" class="text-xs font-medium text-indigo-600 hover:text-indigo-800">Iniciar →</button>
             </div>
@@ -36,6 +39,9 @@
             <span class="text-xs font-semibold px-2 py-1 rounded-md bg-indigo-50 text-indigo-600 mb-2 inline-block">{{ tarefa.prioridade }}</span>
             <h3 class="font-bold text-slate-800">{{ tarefa.titulo }}</h3>
             <p class="text-sm text-slate-500 mt-1">{{ tarefa.descricao }}</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span v-for="user in tarefa.responsaveis" :key="user.id" class="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full">{{ user.nome }}</span>
+            </div>
             <div class="mt-4 flex justify-end">
               <button @click="atualizarStatus(tarefa.id, 'Concluído')" class="text-xs font-medium text-emerald-600 hover:text-emerald-800">Concluir ✓</button>
             </div>
@@ -51,6 +57,9 @@
           <div v-for="tarefa in tarefasFiltradas('Concluído')" :key="tarefa.id" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 opacity-75 border-l-4 border-l-emerald-500">
             <h3 class="font-bold text-slate-800 line-through decoration-slate-400">{{ tarefa.titulo }}</h3>
             <p class="text-sm text-slate-500 mt-1">Tarefa finalizada.</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span v-for="user in tarefa.responsaveis" :key="user.id" class="text-xs bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full">{{ user.nome }}</span>
+            </div>
           </div>
         </div>
       </div>
