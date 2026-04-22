@@ -245,6 +245,10 @@ const tarefasFiltradas = (statusColuna) => {
   return tarefasComFiltro().filter(t => t.status === statusColuna)
 }
 
+const quantidadeTarefasConcluidas = () => {
+  return tarefas.value.filter(t => t.status === 'Concluído').length
+}
+
 const atualizarStatus = async (id, novoStatus) => {
   // A barra aqui é mantida para separar o ID (ex: tarefas/1)
   await axios.put(`http://localhost:8000/tarefas/${id}`, { status: novoStatus })
