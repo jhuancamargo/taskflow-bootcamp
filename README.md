@@ -43,7 +43,7 @@ O escopo do projeto contempla:
 | **01** | Jhuan | Base (MVP) | Estrutura inicial do Back-end, Front-end e Banco de Dados |
 | **02** | [ Gabriela ] | [ Ex: Front-end ] | [ Responsável pelo design e estilização da parte front-end do projeto. ] |
 | **03** | [ Nome ] | [ Ex: Back-end ] | [ Descreva sua tarefa aqui ] |
-| **04** | [ Gabriela | Gabriel David ] | [ Ex: Documentação ]| [ Responsável pela elaboração da documentação e envio do trabalho na plataforma. ] |
+| **04** | [ Gabriela, Gabriel David ] | [ Ex: Documentação ]| [ Responsável pela elaboração da documentação e envio do trabalho na plataforma. ] |
 | **05** | [ Carlos David ] | [ Validação ] | [ Teste em ambiente local ] |
 | **06** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
 | **07** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
