@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from datetime import date
 from typing import Optional, List
 from app.models.models import PrioridadeEnum, StatusEnum
@@ -29,7 +29,7 @@ class TarefaResponse(TarefaBase):
     id: int
 
     class Config:
-        from_attributes = True  # Permite que o Pydantic leia objetos do SQLAlchemy
+        orm_mode = True  # Permite que o Pydantic leia objetos do SQLAlchemy
 
 # ==========================================
 # SCHEMAS DE USUÁRIOS
@@ -44,7 +44,7 @@ class UsuarioCreate(UsuarioBase):
 
 class UsuarioResponse(UsuarioBase):
     id: int
-    tarefas: List[TarefaResponse] = []  # Retorna as tarefas atreladas ao usuário
+    tarefas: List[TarefaResponse] = Field(default_factory=list) # Retorna as tarefas atreladas ao usuário
 
     class Config:
-        from_attributes = True
+        orm_mode = True
