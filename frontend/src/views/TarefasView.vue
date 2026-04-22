@@ -43,6 +43,7 @@
               <option value="" disabled>Selecione um membro</option>
               <option v-for="u in usuarios" :key="u.id" :value="u.id">{{ u.nome }}</option>
             </select>
+            <p class="text-xs text-slate-500 mt-1">Segure Ctrl/Cmd para selecionar múltiplos usuários</p>
           </div>
         </div>
         
@@ -64,13 +65,11 @@ const usuarios = ref([])
 const form = ref({titulo: '', descricao: '', prioridade: 'Média', prazo: '', responsavel_id: null})
 
 onMounted(async () => {
-  // CORREÇÃO: Removida a barra final
   const res = await axios.get('http://localhost:8000/usuarios')
   usuarios.value = res.data
 })
 
 const salvarTarefa = async () => {
-  // CORREÇÃO: Removida a barra final
   await axios.post('http://localhost:8000/tarefas', form.value)
   router.push('/')
 }
