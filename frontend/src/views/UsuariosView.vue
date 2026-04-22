@@ -32,6 +32,7 @@
             <th class="p-4 text-sm font-semibold text-slate-600">Nome</th>
             <th class="p-4 text-sm font-semibold text-slate-600">E-mail</th>
             <th class="p-4 text-sm font-semibold text-slate-600">Função</th>
+            <th class="p-4 text-sm font-semibold text-slate-600 text-right"></th>
           </tr>
         </thead>
         <tbody>
@@ -39,6 +40,15 @@
             <td class="p-4 text-slate-800 font-medium">{{ user.nome }}</td>
             <td class="p-4 text-slate-600">{{ user.email }}</td>
             <td class="p-4 text-slate-600">{{ user.funcao }}</td>
+            <td class="p-4 text-right">
+              <button
+                @click="excluirUsuario(user.id, user.nome)"
+                class="w-6 h-6 inline-flex items-center justify-center rounded-full text-slate-400 hover:bg-red-100 hover:text-red-600 transition cursor-pointer"
+                title="Excluir usuário"
+              >
+                ×
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -68,6 +78,20 @@ const salvarUsuario = async () => {
     form.value = { nome: '', email: '', funcao: '' }
     await carregarUsuarios()
   } catch (e) { alert("Erro ao salvar: " + e.response?.data?.detail || e.message) }
+}
+
+const excluirUsuario = async (id, nome) => {
+  const confirmar = confirm(
+    `Deseja realmente excluir o usuário "${nome}"? Isso pode remover também as tarefas associadas a ele.`
+  )
+  if (!confirmar) return
+
+  try {
+    await axios.delete(`${api}/${id}`)
+    await carregarUsuarios()
+  } catch (e) {
+    alert("Erro ao excluir: " + (e.response?.data?.detail || e.message))
+  }
 }
 
 onMounted(carregarUsuarios)

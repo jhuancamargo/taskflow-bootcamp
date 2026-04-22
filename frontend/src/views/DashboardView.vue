@@ -91,7 +91,7 @@
           A Fazer <span class="bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full text-xs">{{ tarefasFiltradas('A Fazer').length }}</span>
         </h2>
         <div class="space-y-3">
-          <div v-for="tarefa in tarefasFiltradas('A Fazer')" :key="tarefa.id" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow border-l-4 border-l-slate-400">
+          <div v-for="tarefa in tarefasFiltradas('A Fazer')" :key="tarefa.id" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow border-l-4 border-l-slate-400 relative">
             <div class="flex flex-wrap gap-2 mb-3">
               <span class="text-xs font-semibold px-2 py-1 rounded-md bg-blue-50 text-blue-700">
                 {{ obterNomeResponsavel(tarefa.responsavel_id) }}
@@ -103,6 +103,13 @@
                 {{ tarefa.prioridade }}
               </span>
             </div>
+
+            <button
+              @click="excluirTarefa(tarefa.id)"
+              class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:bg-red-100 hover:text-red-600 transition"
+            >
+              ×
+            </button>
 
             <h3 class="font-bold text-slate-800">{{ tarefa.titulo }}</h3>
             <p class="text-sm text-slate-500 mt-1">{{ tarefa.descricao }}</p>
@@ -122,7 +129,7 @@
           Em Andamento <span class="bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full text-xs">{{ tarefasFiltradas('Em Andamento').length }}</span>
         </h2>
         <div class="space-y-3">
-          <div v-for="tarefa in tarefasFiltradas('Em Andamento')" :key="tarefa.id" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow border-l-4 border-l-indigo-500">
+          <div v-for="tarefa in tarefasFiltradas('Em Andamento')" :key="tarefa.id" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-shadow border-l-4 border-l-indigo-500 relative">
             <div class="flex flex-wrap gap-2 mb-3">
               <span class="text-xs font-semibold px-2 py-1 rounded-md bg-blue-50 text-blue-700">
                 {{ obterNomeResponsavel(tarefa.responsavel_id) }}
@@ -134,6 +141,13 @@
                 {{ tarefa.prioridade }}
               </span>            
             </div>
+            
+            <button
+              @click="excluirTarefa(tarefa.id)"
+              class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:bg-red-100 hover:text-red-600 transition"
+            >
+              ×
+            </button>
 
             <h3 class="font-bold text-slate-800">{{ tarefa.titulo }}</h3>
             <p class="text-sm text-slate-500 mt-1">{{ tarefa.descricao }}</p>
@@ -161,7 +175,7 @@
         <h2 class="font-bold text-emerald-800 mb-4 flex justify-between">
           Concluído <span class="bg-emerald-200 text-emerald-800 px-2 py-0.5 rounded-full text-xs">{{ tarefasFiltradas('Concluído').length }}</span>
         </h2>
-        <div v-for="tarefa in tarefasFiltradas('Concluído')" :key="tarefa.id" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 opacity-75 border-l-4 border-l-emerald-500">
+        <div v-for="tarefa in tarefasFiltradas('Concluído')" :key="tarefa.id" class="bg-white p-4 rounded-lg shadow-sm border border-slate-200 opacity-75 border-l-4 border-l-emerald-500 relative">
           <div class="flex flex-wrap gap-2 mb-3">
             <span :class="['text-xs font-semibold px-2 py-1 rounded-md', classePrioridade(tarefa.prioridade)]">
               {{ tarefa.prioridade }}
@@ -178,12 +192,21 @@
           <p class="text-sm text-slate-500 mt-1">Tarefa finalizada.</p>
 
           <div class="mt-4 flex justify-end">
+              <div class="mt-2 flex justify-between">
+            <button
+              @click="excluirTarefa(tarefa.id)"
+              class="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:bg-red-100 hover:text-red-600 transition"
+            >
+              ×
+            </button>
+
             <button
               @click="atualizarStatus(tarefa.id, 'Em Andamento')"
-              class="text-xs font-medium text-indigo-600 hover:text-indigo-800 cursor-pointer px-1 py-1"
+              class="text-xs text-indigo-600 hover:text-indigo-800 cursor-pointer"
             >
               Reabrir
             </button>
+          </div>
           </div>
         </div>
       </div>
@@ -275,6 +298,17 @@ const limparFiltros = () => {
     responsavel: '',
     status: '',
     prioridade: ''
+  }
+}
+
+const excluirTarefa = async (id) => {
+  if (!confirm("Tem certeza que deseja excluir esta tarefa?")) return
+
+  try {
+    await axios.delete(`http://localhost:8000/tarefas/${id}`)
+    await carregarTarefas()
+  } catch (error) {
+    console.error("Erro ao excluir tarefa", error)
   }
 }
 

@@ -65,11 +65,13 @@ const usuarios = ref([])
 const form = ref({titulo: '', descricao: '', prioridade: 'Média', prazo: '', responsavel_id: null})
 
 onMounted(async () => {
+  // CORREÇÃO: Removida a barra final
   const res = await axios.get('http://localhost:8000/usuarios')
   usuarios.value = res.data
 })
 
 const salvarTarefa = async () => {
+  // CORREÇÃO: Removida a barra final
   await axios.post('http://localhost:8000/tarefas', form.value)
   router.push('/')
 }
