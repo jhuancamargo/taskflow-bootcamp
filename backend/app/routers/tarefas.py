@@ -32,7 +32,7 @@ def atualizar_tarefa(tarefa_id: int, tarefa_up: TarefaUpdate, db: Session = Depe
     if not db_tarefa:
         raise HTTPException(status_code=404, detail="Tarefa não encontrada.")
     
-    dados = tarefa_up.model_dump(exclude_unset=True)
+    dados = tarefa_up.dict(exclude_unset=True)
     for key, value in dados.items():
         setattr(db_tarefa, key, value)
     
