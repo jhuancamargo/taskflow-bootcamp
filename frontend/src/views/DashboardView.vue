@@ -1,16 +1,21 @@
 <template>
   <div class="h-full">
     <div class="mb-8 flex justify-between items-start">
-      <div class="flex-1">
-        <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Visão Geral do Projeto</h1>
-        <p class="text-slate-500 mt-1">Acompanhe o fluxo de trabalho da sua equipe em tempo real.</p>
-      </div>
+  <div class="flex-1">
+    <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Visão Geral do Projeto</h1>
+    <p class="text-slate-500 mt-1">Acompanhe o fluxo de trabalho da sua equipe em tempo real.</p>
+  </div>
 
-    
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-4 py-2.5 shadow-sm">
-          <span class="text-sm font-medium text-slate-600">Total de Tarefas</span>
-          
+      <div class="flex items-center gap-3 relative filtro-container">
+        <button
+          @click="mostrarFiltros = !mostrarFiltros"
+          class="h-[42px] flex items-center gap-2 bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 rounded-lg text-sm font-medium"
+        >
+          Filtros
+        </button>
+
+        <div class="h-[42px] flex items-center gap-2 bg-white border border-slate-200 rounded-lg px-4 shadow-sm">
+          <span class="text-sm font-medium text-slate-600">Total</span>
           <span class="bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full text-xs font-semibold">
             {{ tarefas.length }}
           </span>
@@ -18,10 +23,65 @@
 
         <router-link
           to="/tarefas"
-          class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-medium shadow-sm transition-all"
+          class="h-[42px] flex items-center bg-indigo-600 hover:bg-indigo-700 text-white px-4 rounded-lg text-sm font-medium shadow-sm"
         >
           + Nova Tarefa
         </router-link>
+
+        <div
+          v-if="mostrarFiltros"
+          class="absolute right-0 top-full mt-3 bg-white border border-slate-200 rounded-xl shadow-lg p-4 z-20 w-[520px]"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Responsável</label>
+              <select
+                v-model="filtros.responsavel"
+                class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white text-sm"
+              >
+                <option value="">Todos</option>
+                <option v-for="u in usuarios" :key="u.id" :value="u.id">
+                  {{ u.nome }}
+                </option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Status</label>
+              <select
+                v-model="filtros.status"
+                class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white text-sm"
+              >
+                <option value="">Todos</option>
+                <option value="A Fazer">A Fazer</option>
+                <option value="Em Andamento">Em Andamento</option>
+                <option value="Concluído">Concluído</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">Prioridade</label>
+              <select
+                v-model="filtros.prioridade"
+                class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white text-sm"
+              >
+                <option value="">Todas</option>
+                <option value="Baixa">Baixa</option>
+                <option value="Média">Média</option>
+                <option value="Alta">Alta</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-4 flex justify-end">
+            <button
+              @click="limparFiltros"
+              class="bg-slate-200 hover:bg-slate-300 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium"
+            >
+              Limpar filtros
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -137,6 +197,8 @@ import axios from 'axios'
 
 const tarefas = ref([])
 const usuarios = ref([])
+const filtros = ref({responsavel: '', status: '', prioridade: ''})
+const mostrarFiltros = ref(false)
 
 const carregarTarefas = async () => {
   try {
@@ -156,8 +218,8 @@ const carregarUsuarios = async () => {
   }
 }
 
-const tarefasFiltradas = (status) => {
-  return tarefas.value.filter(t => t.status === status)
+const tarefasFiltradas = (statusColuna) => {
+  return tarefasComFiltro().filter(t => t.status === statusColuna)
 }
 
 const atualizarStatus = async (id, novoStatus) => {
@@ -189,6 +251,33 @@ const classePrioridade = (prioridade) => {
       return 'bg-slate-100 text-slate-600'
   }
 }
+
+const tarefasComFiltro = () => {
+  return tarefas.value.filter(tarefa => {
+    const filtroResponsavel =
+      !filtros.value.responsavel ||
+      String(tarefa.responsavel_id) === String(filtros.value.responsavel)
+
+    const filtroStatus =
+      !filtros.value.status ||
+      tarefa.status === filtros.value.status
+
+    const filtroPrioridade =
+      !filtros.value.prioridade ||
+      tarefa.prioridade === filtros.value.prioridade
+
+    return filtroResponsavel && filtroStatus && filtroPrioridade
+  })
+}
+
+const limparFiltros = () => {
+  filtros.value = {
+    responsavel: '',
+    status: '',
+    prioridade: ''
+  }
+}
+
 onMounted(async () => {
   await Promise.all([carregarTarefas(), carregarUsuarios()])
 })
