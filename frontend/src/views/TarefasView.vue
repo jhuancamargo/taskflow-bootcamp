@@ -27,11 +27,11 @@
             </select>
           </div>
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Atribuir a (Responsável)</label>
-            <select v-model="form.responsavel_id" class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white" required>
-              <option value="" disabled>Selecione um membro</option>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Atribuir a (Responsáveis)</label>
+            <select v-model="form.responsavel_ids" multiple class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white" required>
               <option v-for="u in usuarios" :key="u.id" :value="u.id">{{ u.nome }}</option>
             </select>
+            <p class="text-xs text-slate-500 mt-1">Segure Ctrl/Cmd para selecionar múltiplos usuários</p>
           </div>
         </div>
         
@@ -50,17 +50,20 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const usuarios = ref([])
-const form = ref({ titulo: '', descricao: '', prioridade: 'Média', responsavel_id: null })
+const form = ref({ titulo: '', descricao: '', prioridade: 'Média', responsavel_ids: [] })
 
 onMounted(async () => {
-  // CORREÇÃO: Removida a barra final
   const res = await axios.get('http://localhost:8000/usuarios')
   usuarios.value = res.data
 })
 
 const salvarTarefa = async () => {
-  // CORREÇÃO: Removida a barra final
-  await axios.post('http://localhost:8000/tarefas', form.value)
+  // Converter para integers
+  const dados = {
+    ...form.value,
+    responsavel_ids: form.value.responsavel_ids.map(id => parseInt(id))
+  }
+  await axios.post('http://localhost:8000/tarefas', dados)
   router.push('/')
 }
 </script>
