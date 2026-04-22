@@ -39,3 +39,13 @@ def atualizar_tarefa(tarefa_id: int, tarefa_up: TarefaUpdate, db: Session = Depe
     db.commit()
     db.refresh(db_tarefa)
     return db_tarefa
+
+@router.delete("/{tarefa_id}", status_code=status.HTTP_204_NO_CONTENT)
+def deletar_tarefa(tarefa_id: int, db: Session = Depends(get_db)):
+    tarefa = db.query(Tarefa).filter(Tarefa.id == tarefa_id).first()
+    
+    if not tarefa:
+        raise HTTPException(status_code=404, detail="Tarefa não encontrada.")
+    
+    db.delete(tarefa)
+    db.commit()

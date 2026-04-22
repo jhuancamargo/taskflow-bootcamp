@@ -42,3 +42,13 @@ def listar_usuarios(db: Session = Depends(get_db)):
         }
         for u in usuarios
     ]
+
+@router.delete("/{usuario_id}", status_code=status.HTTP_204_NO_CONTENT)
+def deletar_usuario(usuario_id: int, db: Session = Depends(get_db)):
+    usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+
+    if not usuario:
+        raise HTTPException(status_code=404, detail="Usuário não encontrado.")
+
+    db.delete(usuario)
+    db.commit()
