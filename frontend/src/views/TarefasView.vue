@@ -17,7 +17,7 @@
           <textarea v-model="form.descricao" rows="4" placeholder="Descreva os requisitos técnicos..." class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"></textarea>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
             <label class="block text-sm font-semibold text-slate-700 mb-2">Nível de Prioridade</label>
             <select v-model="form.prioridade" class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white">
@@ -26,9 +26,21 @@
               <option value="Alta">Alta</option>
             </select>
           </div>
+
           <div>
-            <label class="block text-sm font-semibold text-slate-700 mb-2">Atribuir a (Responsáveis)</label>
-            <select v-model="form.responsavel_ids" multiple class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white" required>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Prazo</label>
+            <input
+              v-model="form.prazo"
+              type="date"
+              class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+              required
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">Atribuir a (Responsável)</label>
+            <select v-model="form.responsavel_id" class="w-full border border-slate-300 rounded-lg p-3 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all bg-white" required>
+              <option value="" disabled>Selecione um membro</option>
               <option v-for="u in usuarios" :key="u.id" :value="u.id">{{ u.nome }}</option>
             </select>
             <p class="text-xs text-slate-500 mt-1">Segure Ctrl/Cmd para selecionar múltiplos usuários</p>
@@ -50,20 +62,17 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const usuarios = ref([])
-const form = ref({ titulo: '', descricao: '', prioridade: 'Média', responsavel_ids: [] })
+const form = ref({titulo: '', descricao: '', prioridade: 'Média', prazo: '', responsavel_id: null})
 
 onMounted(async () => {
+  // CORREÇÃO: Removida a barra final
   const res = await axios.get('http://localhost:8000/usuarios')
   usuarios.value = res.data
 })
 
 const salvarTarefa = async () => {
-  // Converter para integers
-  const dados = {
-    ...form.value,
-    responsavel_ids: form.value.responsavel_ids.map(id => parseInt(id))
-  }
-  await axios.post('http://localhost:8000/tarefas', dados)
+  // CORREÇÃO: Removida a barra final
+  await axios.post('http://localhost:8000/tarefas', form.value)
   router.push('/')
 }
 </script>

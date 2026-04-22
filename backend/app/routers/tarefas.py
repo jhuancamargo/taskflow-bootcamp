@@ -16,7 +16,7 @@ def criar_tarefa(tarefa: TarefaCreate, db: Session = Depends(get_db)):
     if not usuario:
         raise HTTPException(status_code=404, detail="Usuário não encontrado.")
     
-    nova_tarefa = Tarefa(**tarefa.model_dump())
+    nova_tarefa = Tarefa(**tarefa.dict())
     db.add(nova_tarefa)
     db.commit()
     db.refresh(nova_tarefa)
@@ -32,10 +32,20 @@ def atualizar_tarefa(tarefa_id: int, tarefa_up: TarefaUpdate, db: Session = Depe
     if not db_tarefa:
         raise HTTPException(status_code=404, detail="Tarefa não encontrada.")
     
-    dados = tarefa_up.model_dump(exclude_unset=True)
+    dados = tarefa_up.dict(exclude_unset=True)
     for key, value in dados.items():
         setattr(db_tarefa, key, value)
     
     db.commit()
     db.refresh(db_tarefa)
     return db_tarefa
+
+@router.delete("/{tarefa_id}", status_code=status.HTTP_204_NO_CONTENT)
+def deletar_tarefa(tarefa_id: int, db: Session = Depends(get_db)):
+    tarefa = db.query(Tarefa).filter(Tarefa.id == tarefa_id).first()
+    
+    if not tarefa:
+        raise HTTPException(status_code=404, detail="Tarefa não encontrada.")
+    
+    db.delete(tarefa)
+    db.commit()
