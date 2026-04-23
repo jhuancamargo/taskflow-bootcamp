@@ -36,20 +36,18 @@ O escopo do projeto contempla:
 
 ## 4. Divisão de Tarefas
 
-**Instrução:** Faça o fork do repositório, insira seu nome, a área e a descrição do que você vai desenvolver. Depois, abra o Pull Request com suas implementações.
-
 | ID | Responsável | Área | Descrição da Tarefa (O que vai fazer) |
 | :--- | :--- | :--- | :--- |
-| **01** | Jhuan | Base (MVP) | Estrutura inicial do Back-end, Front-end e Banco de Dados |
-| **02** | [ Gabriela ] | [ Ex: Front-end ] | [ Responsável pelo design e estilização da parte front-end do projeto. ] |
-| **03** | [ Nome ] | [ Ex: Back-end ] | [ Descreva sua tarefa aqui ] |
-| **04** | [ Gabriela, Gabriel David ] | [ Ex: Documentação ]| [ Responsável pela elaboração da documentação e envio do trabalho na plataforma. ] |
-| **05** | [ Carlos David ] | [ Validação ] | [ Teste em ambiente local ] |
-| **06** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
-| **07** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
-| **08** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
-| **09** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
-| **10** | [ Nome ] | [ Área ] | [ Descreva sua tarefa aqui ] |
+| **01** | Jhuan | Base (MVP) | Estrutura inicial do projeto, configuração do ambiente, criação do back-end, front-end e integração com o banco de dados. |
+| **02** | Gabriela | Front-end | Desenvolvimento da interface, estilização com Tailwind CSS e organização visual das telas. |
+| **03** | Giovanny | Modelagem | Definição das entidades Usuário e Tarefa, atributos e relacionamento entre elas. |
+| **04** | Gabriel | Arquitetura | Definição da arquitetura do sistema, separação entre camadas e organização do projeto. |
+| **05** | Carlos | Back-end | Implementação das rotas da API (CRUD de usuários e tarefas) utilizando FastAPI. |
+| **06** | Thiago | Banco de Dados | Configuração do PostgreSQL via Docker, modelagem das tabelas e persistência dos dados. |
+| **07** | Victor Bettoni | Front-end | Integração do front-end com o back-end, consumo da API e implementação das funcionalidades na interface. |
+| **08** | Felipe | Funcionalidades | Implementação do controle de status das tarefas e lógica de movimentação no Kanban. |
+| **09** | Leandro | Funcionalidades | Implementação dos filtros (por responsável, status e prioridade) e exclusão de tarefas. |
+| **10** | Stephane | Documentação | Elaboração do relatório técnico, requisitos e organização da documentação do projeto. |
 
 ---
 
